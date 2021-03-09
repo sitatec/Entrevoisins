@@ -17,4 +17,17 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="NeighbourInfoFieldStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/neighbour_info_drawable_padding</item>
+        <item name="android:textSize">@dimen/neighbour_info_text_size</item>
+        <item name="android:layout_marginTop">@dimen/neighbour_info_vertical_margin</item>
+    </style>
+
+    <style name="TitleLevel2">
+        <item name="android:textSize">@dimen/title_level2_size</item>
+        <item name="android:textColor">@color/black800</item>
+    </style>
+
 </resources>
