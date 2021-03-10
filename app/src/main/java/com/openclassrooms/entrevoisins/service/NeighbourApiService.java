@@ -1,6 +1,7 @@
 package com.openclassrooms.entrevoisins.service;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.utils.NeighbourListProvider;
 
 import java.util.List;
 
@@ -8,19 +9,7 @@ import java.util.List;
 /**
  * Neighbour API client
  */
-public interface NeighbourApiService {
-
-    /**
-     * Get all my Neighbours
-     * @return {@link List}
-     */
-    List<Neighbour> getNeighbours();
-
-    /**
-     * Deletes a neighbour
-     * @param neighbour
-     */
-    void deleteNeighbour(Neighbour neighbour);
+public interface NeighbourApiService extends NeighbourListProvider {
 
     /**
      * Create a neighbour

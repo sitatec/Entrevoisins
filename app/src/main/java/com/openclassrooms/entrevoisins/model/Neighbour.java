@@ -1,11 +1,14 @@
 package com.openclassrooms.entrevoisins.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Objects;
 
 /**
  * Model object representing a Neighbour
  */
-public class Neighbour {
+public class Neighbour implements Parcelable {
 
     /** Identifier */
     private long id;
@@ -25,6 +28,8 @@ public class Neighbour {
     /** About me */
     private String aboutMe;
 
+    private String socialNetworkAccount;
+
     /**
      * Constructor
      * @param id
@@ -39,7 +44,31 @@ public class Neighbour {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
+        socialNetworkAccount = "www.neighbour.sn/" + name;
+
     }
+
+    protected Neighbour(Parcel parcel) {
+        id = parcel.readLong();
+        name = parcel.readString();
+        avatarUrl = parcel.readString();
+        address = parcel.readString();
+        phoneNumber = parcel.readString();
+        aboutMe = parcel.readString();
+        socialNetworkAccount = parcel.readString();
+    }
+
+    public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {
+        @Override
+        public Neighbour createFromParcel(Parcel in) {
+            return new Neighbour(in);
+        }
+
+        @Override
+        public Neighbour[] newArray(int size) {
+            return new Neighbour[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -89,6 +118,10 @@ public class Neighbour {
         this.aboutMe = aboutMe;
     }
 
+    public String getSocialNetworkAccount() {
+        return socialNetworkAccount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,4 +134,21 @@ public class Neighbour {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(name);
+        parcel.writeString(avatarUrl);
+        parcel.writeString(address);
+        parcel.writeString(phoneNumber);
+        parcel.writeString(aboutMe);
+        parcel.writeString(socialNetworkAccount);
+    }
+
 }

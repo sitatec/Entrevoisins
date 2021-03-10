@@ -3,4 +3,6 @@
     <string name="tab_neighbour_title">My neighbours</string>
     <string name="tab_favorites_title">Favorites</string>
     <string name="activity_new_neighbour">New neighbour</string>
+    <string name="favorite_added_successfully">%1$s  à été ajouté à vos favoris avec succès</string>
+    <string name="favorite_already_exist">%1$s est déjà dans vos favoris</string>
 </resources>

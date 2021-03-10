@@ -2,6 +2,7 @@ package com.openclassrooms.entrevoisins.di;
 
 import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
+import com.openclassrooms.entrevoisins.utils.FavoriteNeighbourIds;
 
 /**
  * Dependency injector to get instance of services
@@ -24,5 +25,9 @@ public class DI {
      */
     public static NeighbourApiService getNewInstanceApiService() {
         return new DummyNeighbourApiService();
+    }
+
+    public static FavoriteNeighbourIds getFavoriteNeighbourIds(){
+        return new FavoriteNeighbourIds();
     }
 }
