@@ -17,46 +17,46 @@ import java.util.List;
 import static org.junit.Assert.assertThat;
 
 @RunWith(JUnit4.class)
-public class FavoriteNeighboursListTest {
+public class FavoriteNeighbourIdsTest {
 
-    FavoriteNeighboursList favoriteNeighboursList;
+    FavoriteNeighbourIds favoriteNeighbourIds;
 
     @Before
     public void setup(){
-        favoriteNeighboursList = DI.getLocalDataManger();
-        FavoriteNeighboursList.setData(LocalDataManagerTestUtil.getRandomNeighbourIds(5));
+        favoriteNeighbourIds = DI.getFavoriteNeighbourIds();
+        FavoriteNeighbourIds.setData(LocalDataManagerTestUtil.getRandomNeighbourIds(5));
     }
 
     @Test
     public void putNewDataSuccessfully(){
         final long fakeData = 100000;
-        Assert.assertFalse(favoriteNeighboursList.contains(fakeData));
-        favoriteNeighboursList.put(fakeData);
-        Assert.assertTrue(favoriteNeighboursList.contains(fakeData));
+        Assert.assertFalse(favoriteNeighbourIds.contains(fakeData));
+        favoriteNeighbourIds.put(fakeData);
+        Assert.assertTrue(favoriteNeighbourIds.contains(fakeData));
     }
 
     @Test
     public void deleteDataSuccessfully(){
-        final Neighbour neighbour = favoriteNeighboursList.getNeighbours().get(0);
-        favoriteNeighboursList.put(neighbour.getId());
-        Assert.assertTrue(favoriteNeighboursList.contains(neighbour.getId()));
-        favoriteNeighboursList.deleteNeighbour(neighbour);
-        Assert.assertFalse(favoriteNeighboursList.contains(neighbour.getId()));
+        final Neighbour neighbour = favoriteNeighbourIds.getNeighbours().get(0);
+        favoriteNeighbourIds.put(neighbour.getId());
+        Assert.assertTrue(favoriteNeighbourIds.contains(neighbour.getId()));
+        favoriteNeighbourIds.deleteNeighbour(neighbour);
+        Assert.assertFalse(favoriteNeighbourIds.contains(neighbour.getId()));
     }
 
     @Test
     public void checkIfContainDataCorrectly(){
         final long fakeData = 999999999; // Very big number to be sur that the local data manger does not contain it.
-        Assert.assertFalse(favoriteNeighboursList.contains(fakeData));
-        favoriteNeighboursList.put(fakeData);
-        Assert.assertTrue(favoriteNeighboursList.contains(fakeData));
+        Assert.assertFalse(favoriteNeighbourIds.contains(fakeData));
+        favoriteNeighbourIds.put(fakeData);
+        Assert.assertTrue(favoriteNeighbourIds.contains(fakeData));
     }
 
     @Test
     public void getNeighbourSuccessfully(){
         List<Neighbour> expectedNeighbours = DI.getNewInstanceApiService().getNeighbours();
-        LocalDataManagerTestUtil.fillLocalDataWithAllNeighboursIds(favoriteNeighboursList, expectedNeighbours);
-        List<Neighbour> neighbours = favoriteNeighboursList.getNeighbours();
+        LocalDataManagerTestUtil.fillLocalDataWithAllNeighboursIds(favoriteNeighbourIds, expectedNeighbours);
+        List<Neighbour> neighbours = favoriteNeighbourIds.getNeighbours();
         assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
     }
 }
