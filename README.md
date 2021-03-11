@@ -13,7 +13,6 @@ android development environment to build and run the app or build it by manually
     - you can select the build variant you want in the "Build Variants" tool window and then build the project.
     - you can also run a specific gradle task from the "Gradle" tool window.
 
-
 ## Folder Structure
 All source code is inside the [app/src](https://github.com/sitatec/Entrevoisins/tree/master/app/src/) folder which is separated into three main directories:
 1. #### [main](https://github.com/sitatec/Entrevoisins/tree/master/app/src/main):
