@@ -1,11 +1,16 @@
 package com.openclassrooms.entrevoisins.test_utils;
 
+import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
+import android.view.View;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourFragment;
+
+import org.hamcrest.Matcher;
 
 import java.util.List;
 import java.util.Random;
@@ -13,6 +18,7 @@ import java.util.Random;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static org.hamcrest.Matchers.allOf;
 
 public class Utils {
@@ -22,9 +28,21 @@ public class Utils {
         final int neighbourIndex = new Random().nextInt(neighbourList.size());
         final Neighbour neighbour = neighbourList.get(neighbourIndex);
 
-        onView(allOf(ViewMatchers.withId(R.id.list_neighbours), isDisplayed()))
+        getAllNeighboursLViewMatcher()
                 .perform(RecyclerViewActions.actionOnItemAtPosition(neighbourIndex, click()));
         return neighbour;
+    }
+
+    private static Matcher<View> getNeighboursListByContentDescription(String contentDescription){
+        return allOf(ViewMatchers.withId(R.id.list_neighbours), withContentDescription(contentDescription));
+    }
+
+    public static ViewInteraction getFavoriteNeighboursViewInteraction(){
+        return onView(getNeighboursListByContentDescription(NeighbourFragment.FAVORITE_NEIGHBOURS_PAGE.toString()));
+    }
+
+    public static ViewInteraction getAllNeighboursLViewMatcher(){
+        return onView(getNeighboursListByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE.toString()));
     }
 
 }

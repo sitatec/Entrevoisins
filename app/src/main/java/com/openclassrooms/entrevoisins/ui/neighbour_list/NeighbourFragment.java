@@ -3,6 +3,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,11 +29,12 @@ import java.util.List;
 public class NeighbourFragment extends Fragment {
 
     public static final String NEIGHBOUR_PAGE_ARG_KEY = "com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourFragment.NEIGHBOUR_PAGE_ARG_KEY";
-    public static final int ALL_NEIGHBOURS_PAGE = 0;
-    public static final int FAVORITE_NEIGHBOURS_PAGE = 1;
+    public static final Integer ALL_NEIGHBOURS_PAGE = 0;
+    public static final Integer FAVORITE_NEIGHBOURS_PAGE = 1;
     private RecyclerView mRecyclerView;
     private NeighbourListProvider mNeighbourListProvider;
     private MyNeighbourRecyclerViewAdapter adapter;
+    private String recyclerViewContentDescription;
 
     /**
      * Create and return a new instance
@@ -53,8 +55,10 @@ public class NeighbourFragment extends Fragment {
 
     private NeighbourListProvider getNeighboursProvider(int page){
         if (page == FAVORITE_NEIGHBOURS_PAGE){
+            recyclerViewContentDescription = FAVORITE_NEIGHBOURS_PAGE.toString();
             return DI.getFavoriteNeighbourIds();
         }
+        recyclerViewContentDescription = ALL_NEIGHBOURS_PAGE.toString();
         return DI.getNeighbourApiService();
     }
 
@@ -62,6 +66,7 @@ public class NeighbourFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
+        view.setContentDescription(recyclerViewContentDescription);
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));

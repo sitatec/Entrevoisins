@@ -40,7 +40,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.test_utils.RecyclerViewItemCountAssertion.withItemCount;
-import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 
@@ -84,14 +83,13 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
-        onView(allOf(ViewMatchers.withId(R.id.list_neighbours), isDisplayed()))
-                .check(matches(hasMinimumChildCount(1)));
+        Utils.getAllNeighboursLViewMatcher().check(matches(hasMinimumChildCount(1)));
     }
 
     @Test
     public void a_favorite_tab_should_contains_only_favorites_neighbours(){
         onView(withId(R.id.tabs)).perform(new SelectFavoriteTabAction());
-        onView(allOf(ViewMatchers.withId(R.id.list_neighbours), isDisplayed()))
+        Utils.getFavoriteNeighboursViewInteraction()
                 .check(withItemCount(DEFAULT_FAVORITE_NEIGHBOURS_COUNT));
     }
 
@@ -102,12 +100,12 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
         // Given : We remove the element at position 2
-        onView(allOf(ViewMatchers.withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(ITEMS_COUNT));
+        Utils.getAllNeighboursLViewMatcher().check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
-        onView(allOf(ViewMatchers.withId(R.id.list_neighbours), isDisplayed()))
+        Utils.getAllNeighboursLViewMatcher()
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
-        onView(allOf(ViewMatchers.withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(ITEMS_COUNT-1));
+        Utils.getAllNeighboursLViewMatcher().check(withItemCount(ITEMS_COUNT-1));
     }
 
     @Test
