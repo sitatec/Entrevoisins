@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.allOf;
 public class Utils {
 
     public static Neighbour startDetailActivityWithRandomNeighbour(){
-        final List<Neighbour> neighbourList = DI.getNewInstanceApiService().getNeighbours();
+        final List<Neighbour> neighbourList = DI.getNeighbourApiService().getNeighbours();
         final int neighbourIndex = new Random().nextInt(neighbourList.size());
         final Neighbour neighbour = neighbourList.get(neighbourIndex);
 

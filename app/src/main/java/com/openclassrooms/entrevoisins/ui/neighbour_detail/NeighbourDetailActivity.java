@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins.ui.neighbour_list;
+package com.openclassrooms.entrevoisins.ui.neighbour_detail;
 
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -24,7 +24,7 @@ import butterknife.OnClick;
 
 public class NeighbourDetailActivity extends AppCompatActivity {
 
-    public static final String EXTRA_NAME = "com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourDetailActivity";
+    public static final String EXTRA_NAME = "com.openclassrooms.entrevoisins.ui.neighbour_detail.NeighbourDetailActivity";
     private Neighbour neighbour;
 
     @BindView(R.id.neighbour_detail_header_title)
