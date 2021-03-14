@@ -54,25 +54,35 @@ public class NeighbourDetailTest {
     @Test
     public void should_add_neighbour_to_favorites() {
         Assert.assertTrue(favoriteNeighbourIds.getNeighbours().isEmpty());
-        onView(withId(R.id.add_to_favorite_button)).perform(click());
+        onView(withId(R.id.toggle_favorite_button)).perform(click());
         Assert.assertTrue(favoriteNeighbourIds.getNeighbours().contains(neighbour));
         Assert.assertEquals(1, favoriteNeighbourIds.getNeighbours().size());
     }
 
+
     @Test
-    public void should_show_snackbar_with_success_message_when_add_to_favorite_button_is_clicked(){
+    public void should_show_snackbar_with_add_to_favorite_success_message(){
         final String snackBarMessage = mActivity.getString(R.string.favorite_added_successfully, neighbour.getName());
-        onView(withId(R.id.add_to_favorite_button)).perform(click());
+        onView(withId(R.id.toggle_favorite_button)).perform(click());
         onView(withId(android.support.design.R.id.snackbar_text))
                 .check(matches(withText(snackBarMessage)));
     }
 
     @Test
-    public void should_show_snackbar_with_favorite_already_exist_message() throws InterruptedException {
-        final String snackBarMessage = mActivity.getString(R.string.favorite_already_exist, neighbour.getName());
-        onView(withId(R.id.add_to_favorite_button)).perform(click());
-        // Click second time (neighbour was already added in favorites).
-        onView(withId(R.id.add_to_favorite_button)).perform(click());
+    public void should_remove_neighbour_to_favorites() {
+        onView(withId(R.id.toggle_favorite_button)).perform(click());
+        Assert.assertEquals(1, favoriteNeighbourIds.getNeighbours().size());
+        onView(withId(R.id.toggle_favorite_button)).perform(click());
+        Assert.assertTrue(favoriteNeighbourIds.getNeighbours().isEmpty());
+    }
+
+
+    @Test
+    public void should_show_snackbar_with_remove_from_favorite_success_message() throws InterruptedException {
+        final String snackBarMessage = mActivity.getString(R.string.favorite_removed_successfully, neighbour.getName());
+        onView(withId(R.id.toggle_favorite_button)).perform(click());
+        // Click second time to remove (neighbour was already added in favorites).
+        onView(withId(R.id.toggle_favorite_button)).perform(click());
         Thread.sleep(Snackbar.LENGTH_LONG + 500);// Wait for previous snack bar to disappear.
         onView(withId(android.support.design.R.id.snackbar_text))
                 .check(matches(withText(snackBarMessage)));

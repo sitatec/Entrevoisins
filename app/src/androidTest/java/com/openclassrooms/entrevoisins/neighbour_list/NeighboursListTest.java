@@ -19,19 +19,21 @@ import com.openclassrooms.entrevoisins.test_utils.actions.DeleteViewAction;
 import com.openclassrooms.entrevoisins.ui.neighbour_detail.NeighbourDetailActivity;
 import com.openclassrooms.entrevoisins.utils.FavoriteNeighbourIds;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -95,6 +97,7 @@ public class NeighboursListTest {
     public void deleting_neighbour_which_is_in_favorites_should_affect_the_recyclerview_inside_the_favorite_tab() throws InterruptedException {
         // if a *favorite* neighbour is deleted from MY NEIGHBOURS tab it must not appear inside the
         // FAVORITES tab.
+
         // check the initial number of favorite neighbours
         onView(withId(R.id.tabs)).perform(new SelectFavoriteTabAction());
         Utils.getFavoriteNeighboursViewInteraction()
@@ -108,6 +111,28 @@ public class NeighboursListTest {
         onView(withId(R.id.tabs)).perform(new SelectFavoriteTabAction());
         Utils.getFavoriteNeighboursViewInteraction()
                 .check(withItemCount(favoriteNeighbourCount - 1));
+    }
+
+    @Test
+    public void should_start_show_the_AddNeighbourActivity(){
+        onView(withId(R.id.add_neighbour)).perform(click());
+        onView(withId(R.id.add_neighbour_layout)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void should_add_new_neighbour() throws InterruptedException {
+        final List<Neighbour> neighbourList = DI.getNeighbourApiService().getNeighbours();
+        Assert.assertEquals(neighbourList.size(), allNeighbourCount);
+
+        onView(withId(R.id.add_neighbour)).perform(click());
+        onView(withId(R.id.name)).perform(typeText("NewNeighbour"));
+        onView(withId(R.id.phoneNumber)).perform(typeText("55443322"));
+        // The aboutMe field and the submit button might be hidden by the keyboard, so we have to close it.
+        onView(withId(R.id.address)).perform(typeText("44 add bool, NB")).perform(closeSoftKeyboard());
+        onView(withId(R.id.aboutMe)).perform(typeText("long text....")).perform(closeSoftKeyboard());
+        onView(withId(R.id.create)).perform(click());
+
+        Assert.assertEquals(neighbourList.size(), allNeighbourCount + 1);
     }
 
 

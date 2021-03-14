@@ -15,7 +15,7 @@ import java.util.Set;
 public class FavoriteNeighbourIds implements NeighbourListProvider{
     private static final Set<Long> DATA_LIST = new HashSet<>();
 
-    // Save only the neighbour id because others info might change.
+    // Save only the neighbour id because others info might change in the future.
     public void put(Long data){
         DATA_LIST.add(data);
     }
@@ -42,7 +42,6 @@ public class FavoriteNeighbourIds implements NeighbourListProvider{
         }
         return new ArrayList<>(favoriteNeighbours);
     }
-
 
     @Override
     public void deleteNeighbour(Neighbour neighbour) {

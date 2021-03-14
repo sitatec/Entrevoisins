@@ -27,7 +27,6 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
         final Bundle fragmentArgBundle = new Bundle();
         fragmentArgBundle.putInt(NeighbourFragment.NEIGHBOUR_PAGE_ARG_KEY, position);
         neighbourFragment.setArguments(fragmentArgBundle);
-        Log.i("ListNeighbourPagerAdpte", "Page Swithced");
         return neighbourFragment;
     }
 

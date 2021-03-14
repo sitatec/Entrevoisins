@@ -3,6 +3,8 @@ package com.openclassrooms.entrevoisins.ui.neighbour_detail;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,11 +28,12 @@ public class NeighbourDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_NAME = "com.openclassrooms.entrevoisins.ui.neighbour_detail.NeighbourDetailActivity";
     private Neighbour neighbour;
+    private final FavoriteNeighbourIds favoriteNeighbourIds = DI.getFavoriteNeighbourIds();
 
     @BindView(R.id.neighbour_detail_header_title)
     TextView titleText;
     @BindView(R.id.neighbour_detail_header)
-    RelativeLayout headerLayout;
+    ConstraintLayout headerLayout;
     @BindView(R.id.neighbour_name)
     TextView neighbourNameText;
     @BindView(R.id.neighbour_phone_number)
@@ -43,6 +46,8 @@ public class NeighbourDetailActivity extends AppCompatActivity {
     TextView neighbourAboutMeText;
     @BindView(R.id.neighbour_detail_root)
     FrameLayout viewRoot;
+    @BindView(R.id.toggle_favorite_button)
+    FloatingActionButton toggleFavoriteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,9 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         neighbourLocationText.setText(neighbour.getAddress());
         neighbourAboutMeText.setText(neighbour.getAboutMe());
         neighbourSocialNetworkText.setText(neighbour.getSocialNetworkAccount());
+        if(favoriteNeighbourIds.contains(neighbour.getId())){
+            toggleFavoriteButton.setImageResource(R.drawable.ic_star_yellow_24dp);
+        }
     }
 
     private void setHeaderBackgroundImage(){
@@ -77,16 +85,26 @@ public class NeighbourDetailActivity extends AppCompatActivity {
                     });
     }
 
-    @OnClick(R.id.add_to_favorite_button)
-    void addToFavorite(){
-        final FavoriteNeighbourIds favoriteNeighbourIds = DI.getFavoriteNeighbourIds();
-        String message;
+    @OnClick(R.id.toggle_favorite_button)
+    void toggleFavorite(){
         if(favoriteNeighbourIds.contains(neighbour.getId())){
-            message = getString(R.string.favorite_already_exist, neighbour.getName());
+            removeFromFavorites();
         }else {
-            favoriteNeighbourIds.put(neighbour.getId());
-            message = getString(R.string.favorite_added_successfully, neighbour.getName());
+            addToFavorites();
         }
+    }
+
+    private void addToFavorites(){
+        favoriteNeighbourIds.put(neighbour.getId());
+        toggleFavoriteButton.setImageResource(R.drawable.ic_star_yellow_24dp);
+        final String message = getString(R.string.favorite_added_successfully, neighbour.getName());
+        Snackbar.make(viewRoot,  message, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void removeFromFavorites(){
+        favoriteNeighbourIds.deleteNeighbour(neighbour);
+        toggleFavoriteButton.setImageResource(R.drawable.ic_star_border_yellow_24dp);
+        final String message = getString(R.string.favorite_removed_successfully, neighbour.getName());
         Snackbar.make(viewRoot,  message, Snackbar.LENGTH_LONG).show();
     }
 

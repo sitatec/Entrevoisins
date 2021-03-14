@@ -34,6 +34,8 @@ public class NeighbourFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private NeighbourListProvider mNeighbourListProvider;
     private MyNeighbourRecyclerViewAdapter adapter;
+    // Here Content Description helps espresso (for instrumented tests) to find each recyclerview
+    // (all neighbours and favorite neighbours)  without ambiguity.
     private String recyclerViewContentDescription;
 
     /**

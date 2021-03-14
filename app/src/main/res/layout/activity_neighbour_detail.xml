@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/neighbour_detail_header"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -30,9 +30,10 @@
                 tools:text="Caroline"
                 android:textSize="@dimen/title_level1_size"
                 android:textColor="@color/white"
-                android:layout_alignParentBottom="true"/>
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-        </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -97,7 +98,7 @@
                         android:layout_height="wrap_content"
                         style="@style/TitleLevel2"
                         android:layout_marginBottom="10dp"
-                        android:text="A propos de moi"
+                        android:text="@string/about_me_title"
                         />
 
                     <TextView
@@ -119,15 +120,15 @@
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_to_favorite_button"
+        android:id="@+id/toggle_favorite_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|end"
         android:layout_marginBottom="37dp"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_star_yellow_24dp"
+        android:src="@drawable/ic_star_border_yellow_24dp"
         app:backgroundTint="@color/white"
-        android:contentDescription="Add to favorites"
+        android:contentDescription="@string/add_to_favorites_content_desc"
         app:maxImageSize="28dp"/>
 
 
@@ -138,7 +139,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_arrow_back_24"
         android:background="@android:color/transparent"
-        android:contentDescription="Back Button" />
+        android:contentDescription="@string/back_button_content_desc" />
 
 </FrameLayout>
 
