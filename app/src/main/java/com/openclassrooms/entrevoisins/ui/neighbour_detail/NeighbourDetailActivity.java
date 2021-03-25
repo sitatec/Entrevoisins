@@ -80,8 +80,7 @@ public class NeighbourDetailActivity extends AppCompatActivity {
                         public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                             headerLayout.setBackground(resource);
                         }
-                        @Override
-                        public void onLoadCleared(@Nullable Drawable placeholder) {}
+                        @Override public void onLoadCleared(@Nullable Drawable placeholder) {}
                     });
     }
 

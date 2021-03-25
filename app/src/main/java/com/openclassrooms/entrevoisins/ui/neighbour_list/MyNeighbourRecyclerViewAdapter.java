@@ -36,7 +36,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             super(view);
             ButterKnife.bind(this, view);
         }
-
     }
 
     public interface OnNeighbourClickListener {
