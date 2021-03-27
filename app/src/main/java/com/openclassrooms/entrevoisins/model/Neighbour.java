@@ -38,12 +38,12 @@ public class Neighbour implements Parcelable {
      */
     public Neighbour(long id, String name, String avatarUrl, String address,
                      String phoneNumber, String aboutMe) {
-        this.id = id;
-        this.name = name;
-        this.avatarUrl = avatarUrl;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.aboutMe = aboutMe;
+        setId(id);
+        setName(name);
+        setAvatarUrl(avatarUrl);
+        setAddress(address);
+        setPhoneNumber(phoneNumber);
+        setAboutMe(aboutMe);
         socialNetworkAccount = "www.neighbour.sn/" + name;
 
     }

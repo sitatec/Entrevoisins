@@ -62,7 +62,7 @@ public class NeighboursListTest {
 
     @Rule
     public ActivityTestRule<ListNeighbourActivity> mActivityRule =
-            new ActivityTestRule(ListNeighbourActivity.class);
+            new ActivityTestRule<>(ListNeighbourActivity.class);
 
     @BeforeClass
     public static void setUpOnce(){
@@ -120,9 +120,8 @@ public class NeighboursListTest {
     }
 
     @Test
-    public void should_add_new_neighbour() throws InterruptedException {
-        final List<Neighbour> neighbourList = DI.getNeighbourApiService().getNeighbours();
-        Assert.assertEquals(neighbourList.size(), allNeighbourCount);
+    public void should_add_new_neighbour()  {
+        Utils.getAllNeighboursLViewMatcher().check(withItemCount(allNeighbourCount));
 
         onView(withId(R.id.add_neighbour)).perform(click());
         onView(withId(R.id.name)).perform(typeText("NewNeighbour"));
@@ -132,7 +131,7 @@ public class NeighboursListTest {
         onView(withId(R.id.aboutMe)).perform(typeText("long text....")).perform(closeSoftKeyboard());
         onView(withId(R.id.create)).perform(click());
 
-        Assert.assertEquals(neighbourList.size(), allNeighbourCount + 1);
+        Utils.getAllNeighboursLViewMatcher().check(withItemCount(allNeighbourCount + 1));
     }
 
 
@@ -141,12 +140,11 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
-        // Given : We remove the element at position 2
         Utils.getAllNeighboursLViewMatcher().check(withItemCount(allNeighbourCount));
         // When perform a click on a delete icon
         Utils.getAllNeighboursLViewMatcher()
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
-        // Then : the number of element is 11
+
         Utils.getAllNeighboursLViewMatcher().check(withItemCount(allNeighbourCount-1));
     }
 
