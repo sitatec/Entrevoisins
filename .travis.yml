@@ -15,6 +15,9 @@ android:
     - $EMULATOR_VERSION
     - sys-img-${ABI}-${EMULATOR_VERSION}
 
+before_install:
+  - yes | sdkmanager "platforms;android-28"
+
 script:
   - chmod +x gradlew
   - echo no | android create avd --force -n test -t $EMULATOR_VERSION --abi $ABI --device 'Nexus 6'
