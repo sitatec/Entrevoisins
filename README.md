@@ -29,4 +29,4 @@ All source code is inside the [app/src](https://github.com/sitatec/Entrevoisins/
 2. [test/java/com/openclassrooms/entrevoisins](https://github.com/sitatec/Entrevoisins/tree/master/app/src/test/java/com/openclassrooms/entrevoisins): contains unit tests. and
 3. [androidTest/java/com/openclassrooms/entrevoisins](https://github.com/sitatec/Entrevoisins/tree/master/app/src/androidTest/java/com/openclassrooms/entrevoisins): contains instrumented tests.
 
-## Tested on Pixel 4 (emulator) and Sùlsung A30 (Real device). 
+## Tested on Pixel 4 (emulator) and Samsung A30 (Real device). 
