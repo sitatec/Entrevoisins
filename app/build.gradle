@@ -1,6 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco-android'
 
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*', 'com.sitatech.mareu.databinding']
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -24,6 +30,14 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        animationsDisabled = true
+
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 

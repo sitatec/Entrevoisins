@@ -1,8 +1,12 @@
 package com.openclassrooms.entrevoisins.neighbour_detail;
 
+import android.os.Build;
 import android.support.design.widget.Snackbar;
+import android.support.test.espresso.UiController;
+import android.support.test.espresso.ViewAction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
@@ -11,6 +15,7 @@ import com.openclassrooms.entrevoisins.test_utils.Utils;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.utils.FavoriteNeighbourIds;
 
+import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -20,10 +25,11 @@ import org.junit.runner.RunWith;
 import java.util.HashSet;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -38,7 +44,7 @@ public class NeighbourDetailTest {
 
     @Rule
     public ActivityTestRule<ListNeighbourActivity> mActivityRule =
-            new ActivityTestRule(ListNeighbourActivity.class);
+            new ActivityTestRule<>(ListNeighbourActivity.class);
 
 
     @Before
@@ -58,7 +64,6 @@ public class NeighbourDetailTest {
         Assert.assertTrue(favoriteNeighbourIds.getNeighbours().contains(neighbour));
         Assert.assertEquals(1, favoriteNeighbourIds.getNeighbours().size());
     }
-
 
     @Test
     public void should_show_snackbar_with_add_to_favorite_success_message(){
@@ -93,6 +98,29 @@ public class NeighbourDetailTest {
         onView(withId(R.id.neighbour_detail_root)).check(matches(isDisplayed()));
         onView(withId(R.id.back_button)).perform(click());
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(matches(isDisplayed()));
+    }
+
+    public ViewAction click(){
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1){
+            // Clicking on CardView throw a "PerformException: Error performing 'single click - At Coordinates: ..."
+            // on old android apis such as api 22 so we "force" clicking on the card view.
+            // (we need support for api 22 for travis ci emulator).
+            return new ViewAction() {
+                @Override public Matcher<View> getConstraints() {
+                    return allOf(isClickable(), isEnabled(), isDisplayed());
+                }
+
+                @Override public String getDescription() {
+                    return "force click";
+                }
+
+                @Override public void perform(UiController uiController, View view) {
+                    view.performClick(); // perform click without checking view coordinates.
+                    uiController.loopMainThreadUntilIdle();
+                }
+            };
+        }
+        return click();
     }
 
 }
