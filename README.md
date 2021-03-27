@@ -1,5 +1,5 @@
 # Entrevoisins
-[![Build Status](https://travis-ci.com/sitatec/Entrevoisins.svg?branch=master)](https://travis-ci.com/sitatec/Entrevoisins) [![codecov](https://codecov.io/gh/sitatec/Entrevoisins/branch/master/graph/badge.svg?token=EP5SOZ08Y8)](https://codecov.io/gh/sitatec/Entrevoisins)
+[![Build Status](https://travis-ci.com/sitatec/Entrevoisins.svg?branch=master)](https://travis-ci.com/sitatec/Entrevoisins) [![codecov](https://codecov.io/gh/sitatec/Entrevoisins/branch/master/graph/badge.svg?token=EP5SOZ08Y8)](https://codecov.io/gh/sitatec/Entrevoisins)  [![Maintainability](https://api.codeclimate.com/v1/badges/55161a589bcb28ea854d/maintainability)](https://codeclimate.com/github/sitatec/Entrevoisins/maintainability)
 
 ## Build
 To build the project, first, you have to download the project zip or clone it `git clone https://github.com/sitatec/Entrevoisins`. The project is configured to be build using Gradle, you can use your favorite
