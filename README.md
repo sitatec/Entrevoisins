@@ -28,3 +28,5 @@ All source code is inside the [app/src](https://github.com/sitatec/Entrevoisins/
   - [utils](https://github.com/sitatec/Entrevoisins/tree/master/app/src/main/java/com/openclassrooms/entrevoisins/utils): contains util classes/interfaces such as [`NeighbourListProvider.java`](https://github.com/sitatec/Entrevoisins/blob/master/app/src/main/java/com/openclassrooms/entrevoisins/utils/NeighbourListProvider.java) which is a `interface` that must be implemented by all neighbour data sources (api service, local data ...).
 2. [test/java/com/openclassrooms/entrevoisins](https://github.com/sitatec/Entrevoisins/tree/master/app/src/test/java/com/openclassrooms/entrevoisins): contains unit tests. and
 3. [androidTest/java/com/openclassrooms/entrevoisins](https://github.com/sitatec/Entrevoisins/tree/master/app/src/androidTest/java/com/openclassrooms/entrevoisins): contains instrumented tests.
+
+## Tested on Pixel 4 (emulator) and Sùlsung A30 (Real device). 
