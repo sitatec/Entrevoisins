@@ -1,9 +1,9 @@
 package com.openclassrooms.entrevoisins.utils;
 
-
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.test_utils.LocalDataManagerTestUtil;
+import com.openclassrooms.entrevoisins.test_utils.FavoriteNeighbourIdsTestUtil;
+import com.openclassrooms.entrevoisins.test_utils.FavoriteNeighbourIdsTestUtil;
 
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Assert;
@@ -14,6 +14,7 @@ import org.junit.runners.JUnit4;
 
 import java.util.List;
 
+import static com.openclassrooms.entrevoisins.test_utils.FavoriteNeighbourIdsTestUtil.FAKE_NEIGHBOURS;
 import static org.junit.Assert.assertThat;
 
 @RunWith(JUnit4.class)
@@ -24,7 +25,7 @@ public class FavoriteNeighbourIdsTest {
     @Before
     public void setup(){
         favoriteNeighbourIds = DI.getFavoriteNeighbourIds();
-        FavoriteNeighbourIds.setData(LocalDataManagerTestUtil.getRandomNeighbourIds(5));
+        FavoriteNeighbourIds.setData(FavoriteNeighbourIdsTestUtil.getRandomNeighbourIds(5));
     }
 
     @Test
@@ -46,7 +47,7 @@ public class FavoriteNeighbourIdsTest {
 
     @Test
     public void checkIfContainDataCorrectly(){
-        final long fakeData = 999999999; // Very big number to be sur that the local data manger does not contain it.
+        final long fakeData = 999999999; // Very big number to be sur that the favoriteNeighbourIds does not contain it.
         Assert.assertFalse(favoriteNeighbourIds.contains(fakeData));
         favoriteNeighbourIds.put(fakeData);
         Assert.assertTrue(favoriteNeighbourIds.contains(fakeData));
@@ -54,9 +55,8 @@ public class FavoriteNeighbourIdsTest {
 
     @Test
     public void getNeighbourSuccessfully(){
-        List<Neighbour> expectedNeighbours = DI.getNewInstanceApiService().getNeighbours();
-        LocalDataManagerTestUtil.fillLocalDataWithAllNeighboursIds(favoriteNeighbourIds, expectedNeighbours);
+        FavoriteNeighbourIdsTestUtil.fillLocalDataWithAllNeighboursIds(favoriteNeighbourIds, FAKE_NEIGHBOURS);
         List<Neighbour> neighbours = favoriteNeighbourIds.getNeighbours();
-        assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
+        assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(FAKE_NEIGHBOURS.toArray()));
     }
 }

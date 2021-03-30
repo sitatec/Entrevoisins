@@ -1,4 +1,3 @@
-
 package com.openclassrooms.entrevoisins.neighbour_list;
 
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -33,6 +32,8 @@ import java.util.Set;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
@@ -43,9 +44,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.test_utils.RecyclerViewItemCountAssertion.withItemCount;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.IsNull.notNullValue;
-
-
 
 /**
  * Test class for list of neighbours
@@ -94,14 +94,27 @@ public class NeighboursListTest {
     }
 
     @Test
+    public void should_show_favorites_tabs_by_swiping(){
+        Utils.getFavoriteNeighboursViewInteraction().check(matches(not(isDisplayed())));
+        Utils.getAllNeighboursLViewMatcher().perform(swipeLeft());
+        Utils.getFavoriteNeighboursViewInteraction().check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void should_show_favorites_tabs_by_selecting_the_tab(){
+        Utils.getFavoriteNeighboursViewInteraction().check(matches(not(isDisplayed())));
+        onView(withId(R.id.tabs)).perform(new SelectFavoriteTabAction());
+        Utils.getFavoriteNeighboursViewInteraction().check(matches(isDisplayed()));
+    }
+
+    @Test
     public void deleting_neighbour_which_is_in_favorites_should_affect_the_recyclerview_inside_the_favorite_tab() throws InterruptedException {
         // if a *favorite* neighbour is deleted from MY NEIGHBOURS tab it must not appear inside the
         // FAVORITES tab.
 
         // check the initial number of favorite neighbours
         onView(withId(R.id.tabs)).perform(new SelectFavoriteTabAction());
-        Utils.getFavoriteNeighboursViewInteraction()
-                .check(withItemCount(favoriteNeighbourCount));
+        Utils.getFavoriteNeighboursViewInteraction().check(withItemCount(favoriteNeighbourCount));
         // delete a neighbour form all neighbour tab.
         onView(withId(R.id.tabs)).perform(new SelectAllNeighboursTabAction());
         Thread.sleep(500); // Wait for tab switching transition/animation to be done.
@@ -167,11 +180,10 @@ public class NeighboursListTest {
     }
 
     private static Set<Long> getFavoritesNeighbourIds(int numberOfFavorites){
-        final List<Neighbour> neighbourList = DI.getNewInstanceApiService().getNeighbours();
         final Set<Long> favoritesNeighbourIds = new HashSet<>();
 
         while (--numberOfFavorites >= 0){
-            favoritesNeighbourIds.add(neighbourList.get(numberOfFavorites).getId());
+            favoritesNeighbourIds.add(Utils.FAKE_NEIGHBOURS.get(numberOfFavorites).getId());
         }
         return favoritesNeighbourIds;
     }

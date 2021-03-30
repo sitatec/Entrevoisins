@@ -12,15 +12,15 @@ import java.util.List;
 import java.util.Set;
 
 
-public class FavoriteNeighbourIds implements NeighbourListProvider{
+public class FavoriteNeighbourIds implements NeighbourListProvider {
     private static final Set<Long> DATA_LIST = new HashSet<>();
 
     // Save only the neighbour id because others info might change in the future.
-    public void put(Long data){
+    public void put(Long data) {
         DATA_LIST.add(data);
     }
 
-    public boolean contains(Long data){
+    public boolean contains(Long data) {
         return DATA_LIST.contains(data);
     }
 

@@ -4,6 +4,7 @@ import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
@@ -120,7 +121,7 @@ public class NeighbourDetailTest {
                 }
             };
         }
-        return click();
+        return ViewActions.click();
     }
 
 }
